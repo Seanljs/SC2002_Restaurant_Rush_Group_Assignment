@@ -19,6 +19,6 @@ Each turn: arrivals, your choices for each staff member, kitchen and serving, ea
 | Git tag | `stage-1` | `stage-2` | `stage-3` |
 | Customers | Regular | Regular, VIP, Critic | Regular, VIP, Critic |
 | Staff | Waiter, Chef, Cashier | Waiter, Chef, Cashier | Host, Waiter, Chef, Cashier |
-| Menu | Salad, Burger, Pasta | Salad, Burger, Pasta | Salad, Burger and Pasta ComboMeal |
+| Menu | Salad, Burger, Pasta | Salad, Burger, Pasta | Salad, Burger, Pasta and ComboMeal |
 | Extra rules | none | VIP 10% off, Critic picks the most elaborate dish and writes a review | Happy Hour (once, 2 turns, 20% off, +15 satisfaction for waiting customers) |
 
