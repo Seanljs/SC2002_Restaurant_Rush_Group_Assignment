@@ -106,7 +106,7 @@ public class Restaurant {
     }
 
     public int quote(Customer c, MenuItem item) {
-        return item.getPriceCents();
+        return c.billFor(item);
     }
 
     public void serve(Customer c, int turn) {

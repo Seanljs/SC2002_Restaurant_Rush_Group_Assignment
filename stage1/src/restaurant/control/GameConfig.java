@@ -26,9 +26,9 @@ public class GameConfig {
     public static GameConfig base() {
         ArrivalSchedule schedule = new ArrivalSchedule();
         schedule.add(1, CustomerType.REGULAR);
-        schedule.add(4, CustomerType.REGULAR);
+        schedule.add(4, CustomerType.VIP);
         schedule.add(7, CustomerType.REGULAR);
-        schedule.add(10, CustomerType.REGULAR);
+        schedule.add(10, CustomerType.CRITIC);
         schedule.add(13, CustomerType.REGULAR);
         schedule.add(16, CustomerType.REGULAR);
         return new GameConfig(18, 2, 4, 4500, 60, schedule);

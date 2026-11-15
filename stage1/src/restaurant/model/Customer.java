@@ -28,6 +28,14 @@ public abstract class Customer {
         List<MenuItem> offerings = menu.getOfferings();
         return offerings.get((id - 1) % offerings.size());
     }
+    
+        public int billFor(MenuItem item) {
+        return item.getPriceCents();
+    }
+
+    protected int satisfactionAtPayment() {
+        return satisfaction;
+    }
 
     public int getId() {
         return id;
@@ -101,7 +109,7 @@ public abstract class Customer {
 
     void pay() {
         require(CustomerState.READY_TO_PAY);
-        recordedSatisfaction = satisfaction;
+        recordedSatisfaction = satisfactionAtPayment();
         order.markPaid();
         table.release();
         state = CustomerState.PAID;

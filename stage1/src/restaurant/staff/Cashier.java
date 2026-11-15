@@ -15,8 +15,14 @@ public class Cashier extends Staff {
             return null;
         }
         int bill = c.getOrder().getBillCents();
+        int before = c.getSatisfaction();
         restaurant.collectPayment(c);
+        int recorded = c.getRecordedSatisfaction();
+        String review = "";
+        if (recorded != before) {
+            review = " [review adjusted satisfaction " + before + " -> " + recorded + "]";
+        }
         return "Cashier collects " + Money.format(bill) + " from " + c + " (PAID, satisfaction "
-                + c.getRecordedSatisfaction() + " recorded, table freed).";
+         + recorded + " recorded" + review + ", table freed).";
     }
 }
