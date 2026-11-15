@@ -28,7 +28,7 @@ public class GameController {
         this.restaurant = config.newRestaurant();
         roster.add(new Waiter());
         roster.add(new Chef());
-        roster.add(new Chef());
+        roster.add(new Host());
     }
 
     public Restaurant getRestaurant() {
