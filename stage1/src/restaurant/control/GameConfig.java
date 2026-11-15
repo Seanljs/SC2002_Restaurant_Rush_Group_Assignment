@@ -1,8 +1,13 @@
 package restaurant.control;
 
+import java.util.List;
+import java.util.Random;
+
 import restaurant.model.ArrivalSchedule;
+import restaurant.model.ComboMeal;
 import restaurant.model.CustomerType;
 import restaurant.model.Menu;
+import restaurant.model.MenuItem;
 import restaurant.model.Restaurant;
 
 public class GameConfig {
@@ -59,7 +64,19 @@ public class GameConfig {
     }
 
     public Menu newMenu() {
-        return Menu.standard();
+        Menu menu = Menu.standard();
+        List<MenuItem> base = menu.getOfferings();
+        Random random = new Random();
+        int firstIndex = random.nextInt(base.size());
+        int secondIndex = random.nextInt(base.size());
+
+        while (secondIndex == firstIndex){
+            secondIndex = random.nextInt(base.size());
+        }
+        MenuItem first = base.get(firstIndex);
+        MenuItem second = base.get(secondIndex);
+        menu.add(new ComboMeal(first, second));
+        return menu;
     }
 
     public Restaurant newRestaurant() {

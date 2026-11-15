@@ -53,6 +53,30 @@ public class ConsoleUI implements GameUI {
         return parse(readLine("  " + role + "> "));
     }
 
+    @Override
+    public boolean askHappyHour() {
+        while (true) {
+            String line = readLine("  Happy Hour ('hh' to activate, Enter to skip)> ");
+            Scanner words = new Scanner(line);
+            if (!words.hasNext()) {
+                return false;
+            }
+            String answer = words.next().toUpperCase();
+            if (!words.hasNext()) {
+                if (answer.equals("HH") || answer.equals("YES") || answer.equals("Y")) {
+                    return true;
+                }
+                if (answer.equals("SKIP") || answer.equals("NO") || answer.equals("N") || answer.equals("WAIT")) {
+                    return false;
+                }
+                if (answer.equals("QUIT") || answer.equals("EXIT")) {
+                    throw new GameQuitException("The manager quit the game.");
+                }
+            }
+            showError("Type 'hh' to start Happy Hour or press Enter to skip.");
+        }
+    }
+
     public static ManagerCommand parse(String raw) {
         Scanner words = new Scanner(raw);
         if (!words.hasNext()) {

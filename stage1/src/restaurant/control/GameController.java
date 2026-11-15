@@ -10,6 +10,9 @@ import restaurant.staff.Chef;
 import restaurant.staff.ManagedStaff;
 import restaurant.staff.StaffTask;
 import restaurant.staff.Waiter;
+import restaurant.model.HappyHour;
+import restaurant.model.SatisfactionGain;
+import restaurant.staff.Host;
 
 public class GameController {
     private final GameConfig config;
@@ -24,6 +27,7 @@ public class GameController {
         this.ui = ui;
         this.restaurant = config.newRestaurant();
         roster.add(new Waiter());
+        roster.add(new Chef());
         roster.add(new Chef());
     }
 
@@ -47,8 +51,11 @@ public class GameController {
 
         arrivals(turn, events);
         ui.showEvents("Arrivals:", events);
-        List<String> notices = new ArrayList<>();
-        ui.showBoard(restaurant, turn, config.getMaxTurns(), notices, describeAvailable(new TurnPlan()));
+        if (restaurant.getHappyHour().isActive()) {
+            ui.showEvents("Happy Hour continues:", happyHourRecovery());
+        }
+        ui.showBoard(restaurant, turn, config.getMaxTurns(), happyHourNotice(), describeAvailable(new TurnPlan()));
+        offerHappyHour();
 
         TurnPlan plan = collectChoices();
 
@@ -72,8 +79,43 @@ public class GameController {
         for (Customer c : restaurant.applyWaitingLoss()) {
             events.add(c + " lost patience and leaves without paying (order cancelled, table freed).");
         }
+        restaurant.endTurn();
         ui.showEvents("Waiting and abandonment:", events);
         ui.showTurnSummary(restaurant, turn);
+    }
+
+    private void offerHappyHour() {
+        HappyHour hh = restaurant.getHappyHour();
+        if (hh.isAvailable() && ui.askHappyHour()) {
+            hh.activate();
+            List<String> events = new ArrayList<>();
+            events.add("Happy Hour is ON for " + HappyHour.DURATION_TURNS + " turns: new orders get "
+                    + (100 - HappyHour.BILL_PERCENT) + "% off.");
+            events.addAll(happyHourRecovery());
+            ui.showEvents("Happy Hour:", events);
+        }
+    }
+
+    private List<String> happyHourRecovery() {
+        List<String> lines = new ArrayList<>();
+        for (SatisfactionGain g : restaurant.applyHappyHourRecovery()) {
+            lines.add(g.getCustomer() + " recovers " + g.getPoints() + " satisfaction (now "
+                    + g.getCustomer().getSatisfaction() + ").");
+        }
+        return lines;
+    }
+
+    private List<String> happyHourNotice() {
+        HappyHour hh = restaurant.getHappyHour();
+        List<String> notice = new ArrayList<>();
+        if (hh.isActive()) {
+            notice.add("Happy Hour: ACTIVE - " + hh.getRemainingTurns() + " turn(s) remaining including this one");
+        } else if (hh.isAvailable()) {
+            notice.add("Happy Hour: available (once per game)");
+        } else {
+            notice.add("Happy Hour: used up");
+        }
+        return notice;
     }
 
     private void arrivals(int turn, List<String> events) {

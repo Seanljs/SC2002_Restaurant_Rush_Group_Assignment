@@ -114,6 +114,12 @@ public abstract class Customer {
         table.release();
         state = CustomerState.PAID;
     }
+    
+    int recoverSatisfaction(int points) {
+        int before = satisfaction;
+        satisfaction = Math.min(START_SATISFACTION, satisfaction + points);
+        return satisfaction - before;
+    }
 
     boolean loseSatisfaction() {
         satisfaction = Math.max(0, satisfaction - getLossPerWaitingTurn());

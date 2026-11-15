@@ -9,6 +9,7 @@ public class Restaurant {
     private final List<Table> tables = new ArrayList<>();
     private final WaitingQueue queue = new WaitingQueue();
     private final List<Customer> customers = new ArrayList<>();
+    private final HappyHour happyHour = new HappyHour();
 
     private int revenueCents;
     private int paidCount;
@@ -29,6 +30,10 @@ public class Restaurant {
 
     public List<Table> getTables() {
         return new ArrayList<>(tables);
+    }
+
+    public HappyHour getHappyHour() {
+        return happyHour;
     }
 
     public WaitingQueue getQueue() {
@@ -106,7 +111,7 @@ public class Restaurant {
     }
 
     public int quote(Customer c, MenuItem item) {
-        return c.billFor(item);
+        return happyHour.applyTo(c.billFor(item));
     }
 
     public void serve(Customer c, int turn) {
@@ -159,5 +164,22 @@ public class Restaurant {
             }
         }
         return left;
+    }
+
+    public List<SatisfactionGain> applyHappyHourRecovery() {
+        List<SatisfactionGain> gains = new ArrayList<>();
+        for (Customer c : customers) {
+            if (c.isWaitingForService()) {
+                int points = c.recoverSatisfaction(HappyHour.RECOVERY_POINTS);
+                if (points > 0) {
+                    gains.add(new SatisfactionGain(c, points));
+                }
+            }
+        }
+        return gains;
+    }
+
+    public void endTurn() {
+        happyHour.endTurn();
     }
 }

@@ -16,6 +16,8 @@ public interface GameUI {
                    List<RoleOptions> available);
 
     ManagerCommand promptStaff(String role, List<String> options);
+    
+    boolean askHappyHour();
 
     void showError(String message);
 
