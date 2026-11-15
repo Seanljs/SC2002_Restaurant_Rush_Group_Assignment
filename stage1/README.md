@@ -1,6 +1,4 @@
-# Restaurant Rush: Stage 1
-
-Core game: Regular customers.
+# Restaurant Rush
 
 ## Run 
 
@@ -14,10 +12,6 @@ Commands: `seat <n>`, `order <n>`, `serve <n>`, `cook <n>`, `wait` (or Enter), `
 18 turns, 2 tables. Win by ending with at least 4 customers paid, at least $45.00 revenue and average satisfaction of at least 60. 
 Each turn: arrivals, your choices for each staff member, kitchen and serving, eating and payment, waiting losses, result check.
 
-## What this stage adds
-
-Regular customers, Waiter, Chef and Cashier; the six-step turn; victory and defeat; every invalid choice is refused with a reason.
-
 ## Stage comparison
 
 | | Stage 1 | Stage 2 | Stage 3 |
@@ -25,6 +19,6 @@ Regular customers, Waiter, Chef and Cashier; the six-step turn; victory and defe
 | Git tag | `stage-1` | `stage-2` | `stage-3` |
 | Customers | Regular | Regular, VIP, Critic | Regular, VIP, Critic |
 | Staff | Waiter, Chef, Cashier | Waiter, Chef, Cashier | Host, Waiter, Chef, Cashier |
-| Menu | Salad, Burger, Pasta | Salad, Burger, Pasta | plus Salad + Pasta Combo |
-| Extra rules | none | VIP 10% off; Critic picks the most elaborate dish and writes a review | Happy Hour (once, 2 turns, 20% off, +15 satisfaction for waiting customers) |
+| Menu | Salad, Burger, Pasta | Salad, Burger, Pasta | Salad, Burger and Pasta ComboMeal |
+| Extra rules | none | VIP 10% off, Critic picks the most elaborate dish and writes a review | Happy Hour (once, 2 turns, 20% off, +15 satisfaction for waiting customers) |
 
